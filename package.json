@@ -3,7 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@types/history": "^4.6.2",
     "@types/material-ui": "^0.20.7",
+    "@types/react-redux": "^5.0.15",
+    "@types/react-router-dom": "^4.2.4",
+    "@types/react-router-redux": "^5.0.12",
+    "@types/redux": "^3.6.0",
+    "@types/redux-thunk": "^2.1.0",
     "history": "^4.7.2",
     "material-ui": "^0.20.0",
     "react": "^16.2.0",

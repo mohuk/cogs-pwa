@@ -1,7 +1,7 @@
 import * as React from 'react';
 import './Login.css';
 
-class App extends React.Component {
+export class Login extends React.Component {
   render() {
     return (
       <div className="App">
@@ -16,4 +16,4 @@ class App extends React.Component {
   }
 }
 
-export default App;
+export default Login;
