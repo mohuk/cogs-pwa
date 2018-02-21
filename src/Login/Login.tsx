@@ -21,7 +21,6 @@ class Login extends React.Component<any, any> {
   onSubmit(e: any) {
     e.preventDefault();
     let { email, password } = this.state;
-    console.log('on submit', email, password);
     this.props.login(email, password);
     this.setState({
       email: '',
@@ -67,7 +66,6 @@ class Login extends React.Component<any, any> {
 }
 
 const mapStateToProps = (state) => {
-  console.log(state.login.isLoginSuccess);
   return {
     isLoginSuccess: state.login.isLoginSuccess,
     loginError: state.login.loginError
