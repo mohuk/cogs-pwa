@@ -12,7 +12,7 @@ export function login(email: string, password: string) {
         dispatch(setLoginSuccess(true));
       })
       .catch(error => {
-        dispatch(setLoginError(error));
+        dispatch(setLoginError(error.response.data.errors[0]));
       });
   };
 }
@@ -37,21 +37,17 @@ function callLoginApi(email: string, password: string): Promise<any> {
       {
         type: 'auths',
         attributes: {
-          userName: 'asad',
-          password: '',
+          userName: email,
+          password,
           keepMeLoggedIn: true
         }
       },
     included: []
   };
-  if (email === 'admin' && password === 'admin') {
-    return Promise.resolve();
-  } else {
-    return Promise.reject(new Error('Login Failed'));
-  }
-  // axios.post('https://cogs.10pearls.com/cogsapi/api/auth/login', body)
-  //   .then(console.log)
-  //   .catch(console.log);
+  return axios.post('https://cogs.10pearls.com/cogsapi/api/auth/login', body);
+  // .catch((err) => {
+  //   return Promise.reject(new Error(err.message));
+  // });
 }
 
 export function reducer(state: any = {

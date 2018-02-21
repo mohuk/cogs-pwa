@@ -56,8 +56,8 @@ class Login extends React.Component<any, any> {
           />
 
           <div className="message">
-            {isLoginSuccess && <div>Success.</div>}
-            {loginError && <div>Failed</div>}
+            {isLoginSuccess && <div>Mubarak Ho, Token app ka hua.</div>}
+            {loginError && <div>{loginError.detail}</div>}
           </div>
         </form>
       </div>
