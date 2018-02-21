@@ -1,53 +1,83 @@
 import { RaisedButton, TextField } from 'material-ui';
-import  './Login.css';
-// import axios from 'axios';
+import { connect } from 'react-redux';
+import './Login.css';
+import { login } from '../modules/login';
 import * as React from 'react';
-interface LoginProps {
-
-}
-
-interface LoginState {
-  username: string;
-  password: string;
-}
 
 const style = {
   margin: 15,
 };
 
-export class Login extends React.Component<LoginProps, LoginState> {
-  constructor(props: LoginProps) {
+class Login extends React.Component<any, any> {
+  constructor(props: any) {
     super(props);
     this.state = {
-      username: '',
+      email: '',
       password: ''
     };
+    this.onSubmit = this.onSubmit.bind(this);
   }
 
-  handleClick() {
-    // var apiBaseUrl = 'https://cogs.10pearls.com/cogsapi/api/auth/login';
-
-    // console.log('inside handleclick', this.state);
+  onSubmit(e: any) {
+    e.preventDefault();
+    let { email, password } = this.state;
+    console.log('on submit', email, password);
+    this.props.login(email, password);
+    this.setState({
+      email: '',
+      password: ''
+    });
   }
 
   render() {
+    let { isLoginSuccess, loginError } = this.props;
     return (
       <div className="login-container">
-        <TextField
-          hintText="Enter your Username"
-          floatingLabelText="Username"
-          onChange={(event, newValue) => this.setState({ username: newValue })}
-        />
-        <br />
-        <TextField
-          type="password"
-          hintText="Enter your Password"
-          floatingLabelText="Password"
-          onChange={(event, newValue) => this.setState({ password: newValue })}
-        />
-        <br />
-        <RaisedButton label="Submit" primary={true} style={style} onClick={(event) => this.handleClick()} />
+        <form name="loginForm" onSubmit={this.onSubmit}>
+          <TextField
+            hintText="Enter your Username"
+            floatingLabelText="Username"
+            onChange={(e: any) => this.setState({ email: e.target.value })}
+            value={this.state.email}
+          />
+          <br />
+          <TextField
+            type="password"
+            hintText="Enter your Password"
+            floatingLabelText="Password"
+            onChange={(e: any) => this.setState({ password: e.target.value })}
+            value={this.state.password}
+          />
+          <br />
+          <RaisedButton
+            label="Submit"
+            type="submit"
+            primary={true}
+            style={style}
+          />
+
+          <div className="message">
+            {isLoginSuccess && <div>Success.</div>}
+            {loginError && <div>Failed</div>}
+          </div>
+        </form>
       </div>
     );
   }
 }
+
+const mapStateToProps = (state) => {
+  console.log(state.login.isLoginSuccess);
+  return {
+    isLoginSuccess: state.login.isLoginSuccess,
+    loginError: state.login.loginError
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    login: (email, password) => dispatch(login(email, password))
+  };
+};
+
+export const LoginContainer = connect(mapStateToProps, mapDispatchToProps)(Login);
